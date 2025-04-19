@@ -12,6 +12,15 @@ class Register extends CI_Controller {
     public function index() {
         $this->load->view('register_view.php');  
     }
+   
+
+    function buatPassword(){
+        $kata = "ABCDEFGHIJKLMNPQRSTU123456789";
+        $acak = str_shuffle($kata); 
+        $password = substr($acak, 0, 6); 
+        return $password;
+    }
+    
 	
     function simpanData(){
         $nik = $this->input->post('nik');
@@ -20,24 +29,36 @@ class Register extends CI_Controller {
         $telp = $this->input->post('telp');
         $email = $this->input->post('email');
         $jenisAkun = $this->input->post('jenisAkun');
-        $password = random_string('alnum', 8); 
-
+        // $password = random_string('alnum', 6); 
+        $password = $this->buatPassword();
+        $statusAktivasi = "Belum";
       
-       
-        $data = array(
-            'nik' => $nik,
-            'namaLengkap' => $namaLengkap,
-            'alamat' => $alamat,
-            'telp' => $telp,
-            'email' => $email,
-            'jenisAkun' => $jenisAkun,
-            'password' => $password,
-            'statusAktivasi' => 'Pending'
-        );
+        $cek = $this->db->get_where('tbdaftar', ['nik' => $nik])->num_rows();
 
-        $this->db->insert('tbdaftar', $data);
-        $this->session->set_flashdata('message', 'Data Berhasil Disimpan');
-        redirect('Halaman');
+        if ($cek > 0){
+            $this->session->set_flashdata('pesan', 'NIK sudah terdaftar!');
+            redirect('Register');
+        }else{
+            $data = array(
+                'nik' => $nik,
+                'namaLengkap' => $namaLengkap,
+                'alamat' => $alamat,
+                'telp' => $telp,
+                'email' => $email,
+                'jenisAkun' => $jenisAkun,
+                'password' => $password,
+                'statusAktivasi' => $statusAktivasi
+            );
+            
+                $this->db->insert('tbdaftar', $data);
+                $this->session->set_flashdata('pesan', 'Data Berhasil Disimpan');
+                redirect('Halaman');
+
+        }
+      
+
+    
+
 
 
 

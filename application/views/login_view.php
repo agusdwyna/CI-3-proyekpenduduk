@@ -76,10 +76,14 @@
      <div class="wrapper text-center">
       <form name="formlogin" method="POST" action="<?php echo base_url('Halaman/proseslogin');?>">
         <h2 class="mb-4 p-1">SELAMAT DATANG DI WEBSITE PENDATAAN PENDUDUK DOMISILI </h2>
-        <?php if ($this->session->flashdata('pesan')): ?>
-        <div class="alert alert-danger">
-            <?php echo $this->session->flashdata('pesan'); ?>
-        </div>
+        <?php if ($this->session->flashdata('pesanLogin')): ?>
+          <div class="alert alert-danger">
+              <?php echo $this->session->flashdata('pesanLogin'); ?>
+          </div>
+        <?php elseif ($this->session->flashdata('pesan')): ?>
+          <div class="alert alert-info">
+              <?php echo $this->session->flashdata('pesan'); ?>
+          </div>
         <?php endif; ?>
         <div class="mb-3 position-relative">
           <input type="text" name="nik" class="form-control p-3" placeholder="NIK" required>

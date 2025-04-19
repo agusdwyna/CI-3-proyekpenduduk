@@ -11,31 +11,33 @@ class Halaman extends CI_Controller {
         $nik = $this->input->post('nik');
         $password = $this->input->post('password');
 
-        // Query untuk cek data nik di tabel tbLogin
         $sql = "SELECT * FROM tbLogin WHERE nik = ?";
         $query = $this->db->query($sql, array($nik));
 
         if ($query->num_rows() > 0) {
             $data = $query->row();
             
-            // Pastikan password di database cocok dengan input pengguna
+ 
             if ($data->password == $password) { // Jika password tidak di-hash
        
 
                 $array = array(
-                    'idLogin'  => $data->idLogin,
+                    'kodeLogin'  => $data->kodeLogin,
+                    'password' =>$data->password,
                     'nik' => $data->nik,
+                    'namaLengkap' => $data->namaLengkap,
+                    'level' => $data->level
                    
                     
                 );  
                 $this->session->set_userdata($array);  
-                redirect('dashboard','refresh'); // Halaman admin
+                redirect('dashboard','refresh');
             } else {
-                $this->session->set_flashdata('pesan', 'Nik atau Password Salah!');
-                redirect('halaman','refresh'); // Kembali ke login
+                $this->session->set_flashdata('pesanLogin', 'NIK atau Password Salah!');
+                redirect('halaman','refresh'); 
             }   
         } else {
-            $this->session->set_flashdata('pesan', 'nik tidak ditemukan!');
+            $this->session->set_flashdata('pesanLogin', 'NIK atau Password Salah!');
             redirect('halaman','refresh');    
         }
     }

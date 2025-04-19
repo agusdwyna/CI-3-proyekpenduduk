@@ -83,6 +83,11 @@
      <div class="wrapper text-center">
       <form method ="POST" action="<?php echo base_url('Register/simpanData');?>">
         <h2 class="mb-4 p-1">REGISTER</h2>
+        <?php if ($this->session->flashdata('pesan')): ?>
+      <div class="alert alert-danger">
+          <?= $this->session->flashdata('pesan'); ?>
+      </div>
+  <?php endif; ?>
         <div class="mb-3 position-relative">
           <input type="text" class="form-control p-3" name="nik" placeholder="NIK" required>
           <i class='bx bxs-id-card position-absolute top-50 end-0 translate-middle-y pe-3'></i>
@@ -107,8 +112,8 @@
         <div class="mb-3 position-relative">
         <select name="jenisAkun" class="form-control p-3" required>
           <option value="" selected disabled hidden>Pilih Jabatan</option>
-          <option value="kepalalingkungan">Kepala Lingkungan</option>
-          <option value="penanggungjawab">Penanggung Jawab</option>
+          <option value="Kepala Lingkungan ">Kepala Lingkungan</option>
+          <option value="Penanggung Jawab">Penanggung Jawab</option>
         </select>
         <i class='bx bxs-user-badge position-absolute top-50 end-0 translate-middle-y pe-3'></i>
       </div>
